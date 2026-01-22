@@ -68,9 +68,6 @@ UPDATE profiles SET is_admin = true WHERE email = 'あなたのメールアド�
 npm run seed
 ```
 
-- 入力元: `研究プログラムまとめ - シート1.csv`
-- スクリプト: `scripts/seed-programs.js`
-
 ## 開発用コマンド
 
 ```bash

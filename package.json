@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "seed": "node scripts/seed-programs.js"
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.91.0",
