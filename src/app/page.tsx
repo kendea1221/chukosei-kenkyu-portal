@@ -30,7 +30,8 @@ export default function Home() {
   );
 
   const formats = useMemo(
-    () => [...new Set(programs.map((p) => p.format).filter(Boolean))].sort(),
+    () =>
+      ([...new Set(programs.map((p) => p.format).filter(Boolean))] as string[]).sort(),
     [programs]
   );
 
