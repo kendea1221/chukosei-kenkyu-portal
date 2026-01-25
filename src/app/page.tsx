@@ -2,10 +2,17 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/lib/supabase';
-import ProgramCard from '@/components/ProgramCard';
+import ProgramCardSkeleton from '@/components/ProgramCardSkeleton';
 import Header from '@/components/Header';
+
+// 動的インポートで初期バンドルサイズ削減
+const ProgramCard = dynamic(() => import('@/components/ProgramCard'), {
+  loading: () => <ProgramCardSkeleton />,
+  ssr: false,
+});
 
 type Program = Database['public']['Tables']['programs']['Row'];
 
@@ -208,12 +215,12 @@ export default function Home() {
           {/* メインコンテンツ */}
           <div className="lg:col-span-3">
             {loading ? (
-              <div className="text-center py-12">
+              <div className="text-center py-12 min-h-[400px] flex flex-col items-center justify-center">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
                 <p className="mt-4 text-gray-600">読み込み中...</p>
               </div>
             ) : filteredPrograms.length === 0 ? (
-              <div className="text-center py-12 text-gray-600">
+              <div className="text-center py-12 text-gray-600 min-h-[400px] flex items-center justify-center">
                 該当するプログラムが見つかりません
               </div>
             ) : (
@@ -221,7 +228,7 @@ export default function Home() {
                 <p className="text-sm text-gray-600 mb-6">
                   {filteredPrograms.length}件のプログラム
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[400px]">
                   {filteredPrograms.map((program) => (
                     <ProgramCard key={program.id} program={program} />
                   ))}

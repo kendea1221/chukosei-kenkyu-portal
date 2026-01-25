@@ -3,11 +3,20 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/lib/supabase';
 import Header from '@/components/Header';
-import ReviewSection from '@/components/ReviewSection';
-import ShareButtons from '@/components/ShareButtons';
+
+// 動的インポートでレビューセクションとシェアボタンを遅延読み込み
+const ReviewSection = dynamic(() => import('@/components/ReviewSection'), {
+  loading: () => <div className="min-h-[200px] skeleton rounded"></div>,
+  ssr: false,
+});
+
+const ShareButtons = dynamic(() => import('@/components/ShareButtons'), {
+  ssr: false,
+});
 
 type Program = Database['public']['Tables']['programs']['Row'];
 
@@ -57,7 +66,7 @@ export default function ProgramDetail() {
     return (
       <main className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 py-12 text-center">
+        <div className="container mx-auto px-4 py-12 text-center min-h-[400px] flex flex-col items-center justify-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
           <p className="mt-4 text-gray-600">読み込み中...</p>
         </div>
@@ -69,7 +78,7 @@ export default function ProgramDetail() {
     return (
       <main className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 py-12 text-center">
+        <div className="container mx-auto px-4 py-12 text-center min-h-[400px] flex flex-col items-center justify-center">
           <h1 className="text-xl font-semibold text-gray-900 mb-4">プログラムが見つかりません</h1>
           <Link href="/" className="text-gray-600 hover:text-gray-900">
             ← ホームに戻る

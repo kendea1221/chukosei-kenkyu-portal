@@ -40,4 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# パフォーマンス分析
+.next/analyze/
+bundle-analyzer/
+
 .env.local
